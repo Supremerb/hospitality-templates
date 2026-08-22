@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  AURORA COFFEE ROASTERS — Premium cafe site
+  ═══════════════════════════════════════════════════════════════════
+  Self-contained. No build step, no framework, no npm, no server.
+
+  FEATURES
+    · CSS-3D rotating coffee cup (40 segments, directional shading)
+    · Full zoom lightbox — wheel / pinch / double-tap zoom + drag pan
+    · Magnetic buttons with shine sweep
+    · Preloader, scroll progress, mobile drawer, scroll reveals
+    · Live open/closed from opening hours
+    · Tabbed menu, testimonial slider, validated enquiry form
+    · JSON-LD structured data for Google Maps "open now"
+
+  SECURITY
+    · Zero server-side code — nothing to inject into
+    · No third-party scripts, no analytics, no trackers
+    · Form is client-side only; wire to Netlify Forms or Formspree
+    · Deploy with the _headers file for CSP + HSTS
+
+  CHANGE: marks everything to replace per client.
+  IMAGES: picsum placeholders — swap for photos YOU took at the venue.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0A0C0B">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<title>Aurora Coffee Roasters — Devonport, Tasmania</title>
+<meta name="description" content="Small-batch roasters and all-day kitchen on Rooke Street, Devonport. Open Tuesday to Sunday from 7am.">
+<meta property="og:title" content="Aurora Coffee Roasters">
+<meta property="og:description" content="Small-batch roasters and all-day kitchen in Devonport, Tasmania.">
+<meta property="og:type" content="restaurant">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CafeOrCoffeeShop",
+"name":"Aurora Coffee Roasters","telephone":"+61364240000","priceRange":"$$","servesCuisine":"Cafe",
+"address":{"@type":"PostalAddress","streetAddress":"12 Rooke Street","addressLocality":"Devonport","addressRegion":"TAS","postalCode":"7310","addressCountry":"AU"},
+"geo":{"@type":"GeoCoordinates","latitude":-41.1789,"longitude":146.3506},
+"openingHoursSpecification":[
+{"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Wednesday","Thursday","Friday"],"opens":"07:00","closes":"15:00"},
+{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday"],"opens":"08:00","closes":"14:00"}]}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="pre"><div>
+  <div class="pre-mark">Aurora<span>.</span></div>
+  <div class="pre-bar"><i id="preBar"></i></div>
+</div></div>
+
+<div id="prog"></div>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Aurora<span>.</span></a>
+    <div class="nav-links">
+      <a href="#craft">Craft</a><a href="#menu">Menu</a><a href="#gallery">Room</a>
+      <a href="#say">Reviews</a><a href="#find">Find us</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
+  </div>
+</nav>
+
+<div id="drawer"><nav>
+  <a href="#craft">Craft</a><a href="#menu">Menu</a><a href="#gallery">Room</a>
+  <a href="#say">Reviews</a><a href="#find">Find us</a>
+</nav></div>
+
+<header class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <div class="chip"><span class="dot" id="dot" aria-hidden="true"></span><span id="statusText">Checking hours…</span></div>
+      <!-- CHANGE: headline, lede -->
+      <h1>Coffee worth <em>crossing town</em> for.</h1>
+      <p>Small-batch roasts, all-day kitchen and house sourdough — on Rooke Street since 2016.</p>
+      <div class="actions">
+        <a class="btn btn-solid mag" href="#menu">See the menu
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost mag" href="#find">Find us</a>
+      </div>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="rig" id="rig">
+        <div class="steam"><i></i><i></i><i></i></div>
+        <div class="shadow"></div><div class="saucer"></div>
+        <div class="cup" id="cup">
+          <div class="disc base"></div><div class="disc brew"></div><div class="disc rim"></div><div class="handle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cue">Scroll</div>
+</header>
+
+<section class="section alt" id="craft">
+  <div class="wrap reveal">
+    <p class="eyebrow">How we work</p>
+    <h2>Three things we refuse to rush.</h2>
+    <div class="cards">
+      <!-- CHANGE: the real three. Ask the owner. -->
+      <article class="card"><span class="card-num">01 — Roast</span><h3>Small batches, weekly</h3>
+        <p>Ten kilos at a time. The filter changes every week and nothing sits long enough to go flat.</p></article>
+      <article class="card"><span class="card-num">02 — Bake</span><h3>Sourdough from Thursday</h3>
+        <p>A 36-hour ferment started every Thursday night. When it's gone on Sunday, it's gone.</p></article>
+      <article class="card"><span class="card-num">03 — Source</span><h3>Whatever the Mersey has</h3>
+        <p>The specials board is written each morning from what the growers up the valley brought down.</p></article>
+    </div>
+    <div class="stats">
+      <div class="stat"><b class="count" data-to="9">0</b><span>Years on Rooke St</span></div>
+      <div class="stat"><b class="count" data-to="12" data-suffix="kg">0</b><span>Roasted weekly</span></div>
+      <div class="stat"><b class="count" data-to="36" data-suffix="hr">0</b><span>Sourdough ferment</span></div>
+      <div class="stat"><b class="count" data-to="4.9" data-dec="1">0</b><span>Google rating</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap cols reveal">
+    <div>
+      <p class="eyebrow">Since 2016</p>
+      <h2>A corner room, a good grinder, no rush.</h2>
+      <p class="lede">Most mornings you'll find the same six people at the window bench. You're welcome to make it seven.</p>
+    </div>
+    <blockquote class="quote">We wanted somewhere you could sit for an hour with one coffee and nobody would look at you sideways.
+      <cite>— Ellie, owner</cite></blockquote>
+  </div>
+</section>
+
+<section class="section alt" id="menu">
+  <div class="wrap reveal">
+    <p class="eyebrow">What's on</p><h2>Menu</h2>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="p1" id="t1">Coffee</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2">Breakfast</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p3" id="t3">Lunch</button>
+    </div>
+    <!-- CHANGE: photograph their board, type it exactly. A wrong price kills trust. -->
+    <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1">
+      <div class="item"><span><span class="item-name">Flat white</span><span class="item-desc">House blend — chocolate, brown sugar</span></span><span class="item-rule"></span><span class="item-price">4.80</span></div>
+      <div class="item"><span><span class="item-name">Long black</span><span class="item-desc">Double shot, hot water</span></span><span class="item-rule"></span><span class="item-price">4.50</span></div>
+      <div class="item"><span><span class="item-name">Batch filter</span><span class="item-desc">Single origin, changes weekly</span></span><span class="item-rule"></span><span class="item-price">5.50</span></div>
+      <div class="item"><span><span class="item-name">Cold brew</span><span class="item-desc">18-hour steep, on tap</span></span><span class="item-rule"></span><span class="item-price">6.00</span></div>
+      <div class="item"><span><span class="item-name">Chai</span><span class="item-desc">House-spiced, brewed to order</span></span><span class="item-rule"></span><span class="item-price">5.20</span></div>
+      <div class="item"><span><span class="item-name">Hot chocolate</span><span class="item-desc">Single origin, 55%</span></span><span class="item-rule"></span><span class="item-price">5.20</span></div>
+    </div>
+    <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+      <div class="item"><span><span class="item-name">Eggs on sourdough</span><span class="item-desc">Poached or scrambled, house loaf</span></span><span class="item-rule"></span><span class="item-price">14</span></div>
+      <div class="item"><span><span class="item-name">The big one</span><span class="item-desc">Eggs, bacon, mushroom, tomato, toast</span></span><span class="item-rule"></span><span class="item-price">24</span></div>
+      <div class="item"><span><span class="item-name">Bircher</span><span class="item-desc">Oats, apple, toasted seeds, yoghurt</span></span><span class="item-rule"></span><span class="item-price">13</span></div>
+      <div class="item"><span><span class="item-name">Mushrooms on toast</span><span class="item-desc">Garlic, thyme, whipped feta</span></span><span class="item-rule"></span><span class="item-price">19</span></div>
+    </div>
+    <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+      <div class="item"><span><span class="item-name">Reuben</span><span class="item-desc">Corned beef, kraut, rye</span></span><span class="item-rule"></span><span class="item-price">18</span></div>
+      <div class="item"><span><span class="item-name">Soup of the day</span><span class="item-desc">With sourdough — ask the board</span></span><span class="item-rule"></span><span class="item-price">14</span></div>
+      <div class="item"><span><span class="item-name">Grain bowl</span><span class="item-desc">Farro, roast veg, tahini</span></span><span class="item-rule"></span><span class="item-price">19</span></div>
+    </div>
+    <p class="menu-note">Gluten-free bread available. Specials board changes daily.</p>
+  </div>
+</section>
+
+<section class="section" id="gallery">
+  <div class="wrap reveal"><p class="eyebrow">The room</p><h2>Have a look around.</h2>
+    <p class="lede">Click any photo to open it full screen — scroll or pinch to zoom, drag to pan.</p></div>
+  <div class="wrap reveal" style="margin-top:2.5rem">
+    <!-- ⚠ CHANGE: replace with photos YOU took at THEIR venue -->
+    <div class="gallery" id="gal">
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/aurora-1/1400/1400" alt="The window bench in morning light" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/aurora-2/900/900" alt="Espresso being poured" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/aurora-3/900/900" alt="Eggs on sourdough" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/aurora-4/900/900" alt="The counter and pastry case" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/aurora-5/900/900" alt="The shopfront from Rooke Street" loading="lazy"></button>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="say">
+  <div class="wrap reveal">
+    <p class="eyebrow">What people say</p><h2>Regulars, mostly.</h2>
+    <!-- CHANGE: copy real reviews from their Google listing. Never invent these. -->
+    <div class="slider">
+      <div class="track" id="track">
+        <div class="slide"><div class="tcard"><div class="stars" aria-label="5 of 5">★★★★★</div>
+          <p>Best flat white on the coast and it isn't close. They remember your order after two visits.</p><cite>Marcus T. — Google</cite></div></div>
+        <div class="slide"><div class="tcard"><div class="stars" aria-label="5 of 5">★★★★★</div>
+          <p>Stopped in on the way to the ferry and stayed an hour. The sourdough is the real thing.</p><cite>Priya N. — Google</cite></div></div>
+        <div class="slide"><div class="tcard"><div class="stars" aria-label="5 of 5">★★★★★</div>
+          <p>Genuinely warm service. Took our toddler in on a rainy Sunday and nobody blinked.</p><cite>Dave R. — Google</cite></div></div>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="find">
+  <div class="wrap cols reveal">
+    <div>
+      <p class="eyebrow">Opening hours</p><h2>When we're on.</h2>
+      <table class="hours" id="hoursTable"><tbody>
+        <tr data-day="1"><th>Monday</th><td>Closed</td></tr>
+        <tr data-day="2"><th>Tuesday</th><td>7:00 — 15:00</td></tr>
+        <tr data-day="3"><th>Wednesday</th><td>7:00 — 15:00</td></tr>
+        <tr data-day="4"><th>Thursday</th><td>7:00 — 15:00</td></tr>
+        <tr data-day="5"><th>Friday</th><td>7:00 — 15:00</td></tr>
+        <tr data-day="6"><th>Saturday</th><td>8:00 — 14:00</td></tr>
+        <tr data-day="0"><th>Sunday</th><td>8:00 — 14:00</td></tr>
+      </tbody></table>
+      <address style="margin-top:2rem">
+        12 Rooke Street<br>Devonport TAS 7310<br>
+        <a href="tel:+61364240000">03 6424 0000</a>
+      </address>
+      <a class="map-link" href="https://maps.google.com/?q=12+Rooke+Street+Devonport+TAS">Open in Google Maps →</a>
+    </div>
+    <div>
+      <p class="eyebrow">Get in touch</p><h2>Bookings &amp; enquiries.</h2>
+      <!-- Netlify Forms: add data-netlify="true" to the form tag after deploying.
+           No backend here = nothing server-side to exploit. -->
+      <form class="form" id="form" novalidate>
+        <div class="field"><label for="fname">Name</label><input id="fname" name="name" type="text" required autocomplete="name"><span class="err" id="e-name"></span></div>
+        <div class="field"><label for="femail">Email</label><input id="femail" name="email" type="email" required autocomplete="email"><span class="err" id="e-email"></span></div>
+        <div class="field"><label for="fmsg">Message</label><textarea id="fmsg" name="message" required></textarea><span class="err" id="e-msg"></span></div>
+        <button class="btn btn-solid mag" type="submit">Send enquiry</button>
+        <p class="form-msg" id="formMsg" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><p class="foot-brand">Aurora<span>.</span></p>
+        <p style="max-width:32ch;color:var(--faint)">Small-batch roasters and all-day kitchen on Rooke Street.</p></div>
+      <div><h4>Visit</h4><ul class="flist"><li>12 Rooke Street</li><li>Devonport TAS 7310</li><li><a href="tel:+61364240000">03 6424 0000</a></li></ul></div>
+      <div><h4>Follow</h4><ul class="flist"><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li></ul></div>
+    </div>
+    <div class="credit"><span>© <span id="year">2026</span> Aurora Coffee Roasters</span>
+      <!-- CHANGE: your name — this is how referrals find you -->
+      <span>Built by Supreme Ranabhat</span></div>
+  </div>
+</footer>
+
+<!-- ═══════════ ZOOM LIGHTBOX ═══════════ -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <div id="lbView"><img id="lbImg" alt=""></div>
+  <div class="lb-hint">Scroll or pinch to zoom · drag to pan</div>
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+  <div class="lb-bar">
+    <button id="zOut" aria-label="Zoom out">−</button>
+    <span class="lb-zoom" id="zVal">100%</span>
+    <button id="zIn" aria-label="Zoom in">+</button>
+    <button id="zReset" aria-label="Reset zoom">⟲</button>
+  </div>
+</div>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

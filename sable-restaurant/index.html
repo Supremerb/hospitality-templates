@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  SABLE & VINE — Premium restaurant site
+  ═══════════════════════════════════════════════════════════════════
+  Self-contained. No build step, no framework, no server.
+
+  FEATURES
+    · 3D rotating dish carousel (CSS transform cylinder, drag + auto)
+    · Full zoom lightbox — wheel / pinch / double-tap + drag pan
+    · Reservation form with date, time, party size, live validation
+    · Preloader, scroll progress, mobile drawer, scroll reveals
+    · Tasting-menu accordion, chef section, awards counter
+    · Live open/closed status, JSON-LD for Google
+
+  SECURITY
+    · Static only. No server code, no database, no auth = no injection
+    · No third-party scripts or trackers
+    · Reservation form is client-side; wire to Netlify Forms / Formspree
+    · Ship with the _headers file for CSP, HSTS, frame-deny
+
+  CHANGE: marks everything to replace per client.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0B0908">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<title>Sable &amp; Vine — Modern Australian Dining, Hobart</title>
+<meta name="description" content="Seasonal Tasmanian produce, wood fire and a considered wine list. Dinner Wednesday to Sunday in Battery Point, Hobart.">
+<meta property="og:title" content="Sable &amp; Vine">
+<meta property="og:description" content="Seasonal Tasmanian produce and wood fire in Battery Point, Hobart.">
+<meta property="og:type" content="restaurant">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Restaurant",
+"name":"Sable & Vine","telephone":"+61362001200","priceRange":"$$$","servesCuisine":"Modern Australian",
+"acceptsReservations":"True",
+"address":{"@type":"PostalAddress","streetAddress":"41 Hampden Road","addressLocality":"Battery Point","addressRegion":"TAS","postalCode":"7004","addressCountry":"AU"},
+"openingHoursSpecification":[
+{"@type":"OpeningHoursSpecification","dayOfWeek":["Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"17:30","closes":"22:30"}]}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@200;300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="pre"><div>
+  <div class="pre-mark">Sable <em>&amp;</em> Vine</div>
+  <div class="pre-bar"><i id="preBar"></i></div>
+</div></div>
+<div id="prog"></div>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Sable <em>&amp;</em> Vine</a>
+    <div class="nav-links">
+      <a href="#kitchen">Kitchen</a><a href="#menu">Menu</a><a href="#room">Room</a>
+      <a href="#book">Reserve</a><a href="#find">Find us</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
+  </div>
+</nav>
+<div id="drawer"><nav>
+  <a href="#kitchen">Kitchen</a><a href="#menu">Menu</a><a href="#room">Room</a>
+  <a href="#book">Reserve</a><a href="#find">Find us</a>
+</nav></div>
+
+<header class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div class="chip"><span class="dot" id="dot" aria-hidden="true"></span><span id="statusText">Checking hours…</span></div>
+    <!-- CHANGE: headline, lede -->
+    <h1>Fire, salt and <em>the season</em>.</h1>
+    <p>Tasmanian produce over wood, a short list of very good wine, and forty seats in Battery Point.</p>
+    <div class="actions">
+      <a class="btn btn-gold mag" href="#book">Reserve a table</a>
+      <a class="btn btn-line mag" href="#menu">The menu</a>
+    </div>
+
+    <!-- 3D dish carousel -->
+    <div class="carousel-wrap" id="carWrap" aria-label="Signature dishes">
+      <div class="carousel" id="car"></div>
+    </div>
+    <div class="car-ctl">
+      <button id="carPrev" aria-label="Previous dish">‹</button>
+      <span class="car-label" id="carLabel"></span>
+      <button id="carNext" aria-label="Next dish">›</button>
+    </div>
+  </div>
+  <div class="cue">Scroll</div>
+</header>
+
+<section class="section alt" id="kitchen">
+  <div class="wrap cols reveal">
+    <div>
+      <p class="eyebrow">The kitchen</p>
+      <div class="rule"></div>
+      <h2>One fire. <em>Everything</em> passes over it.</h2>
+      <!-- CHANGE: the real story, in the chef's words -->
+      <p class="lede">There's no gas in the kitchen. Every plate that leaves the pass has been near flame — sometimes for eight hours, sometimes for forty seconds. It limits what we can do, which is exactly why we did it.</p>
+      <p class="lede">The menu is written each Wednesday around whatever came off the boats at Triabunna and out of the ground at Richmond.</p>
+    </div>
+    <div>
+      <blockquote style="font-family:var(--display);font-size:clamp(1.5rem,2.8vw,2.2rem);line-height:1.3;border-left:1px solid var(--gold);padding-left:1.8rem;margin:0">
+        Cooking over wood is the least forgiving way to do this. You cannot walk away from it, and neither can we.
+        <cite style="display:block;font-family:var(--mono);font-size:.7rem;font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:1.4rem">— Marcus Hale, head chef</cite>
+      </blockquote>
+    </div>
+  </div>
+  <div class="wrap reveal">
+    <div class="stats">
+      <div class="stat"><b class="count" data-to="11">0</b><span>Years open</span></div>
+      <div class="stat"><b class="count" data-to="2" data-suffix=" hats">0</b><span>Good Food Guide</span></div>
+      <div class="stat"><b class="count" data-to="40">0</b><span>Seats</span></div>
+      <div class="stat"><b class="count" data-to="180" data-suffix="+">0</b><span>Wines listed</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="menu">
+  <div class="wrap reveal centered">
+    <p class="eyebrow">What we're cooking</p>
+    <div class="rule"></div>
+    <h2>The <em>autumn</em> menu.</h2>
+    <p class="lede" style="margin-bottom:3rem">Changes each Wednesday. Dietary requirements handled with notice — tell us when you book.</p>
+  </div>
+  <div class="wrap reveal">
+    <!-- CHANGE: real menu, real prices. Photograph theirs and type it exactly. -->
+    <div class="acc" id="acc">
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="true"><span class="no">I</span> To begin <span class="plus">+</span></button>
+        <div class="acc-body"><div class="acc-inner">
+          <div class="dish"><span><span class="dish-name">Bruny Island oysters</span><span class="dish-desc">Finger lime, cold-pressed apple — each</span></span><span class="dish-rule"></span><span class="dish-price">7</span></div>
+          <div class="dish"><span><span class="dish-name">Wood-roasted bread</span><span class="dish-desc">Cultured butter, smoked salt</span></span><span class="dish-rule"></span><span class="dish-price">12</span></div>
+          <div class="dish"><span><span class="dish-name">Wallaby tartare</span><span class="dish-desc">Pepperberry, egg yolk, saltbush crisp</span></span><span class="dish-rule"></span><span class="dish-price">26</span></div>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false"><span class="no">II</span> From the fire <span class="plus">+</span></button>
+        <div class="acc-body"><div class="acc-inner">
+          <div class="dish"><span><span class="dish-name">Whole flounder</span><span class="dish-desc">Brown butter, capers, lemon — for two</span></span><span class="dish-rule"></span><span class="dish-price">78</span></div>
+          <div class="dish"><span><span class="dish-name">Dry-aged sirloin</span><span class="dish-desc">Cape Grim, 45 days, bone marrow jus</span></span><span class="dish-rule"></span><span class="dish-price">62</span></div>
+          <div class="dish"><span><span class="dish-name">Ember celeriac</span><span class="dish-desc">Hazelnut, aged pecorino, black garlic</span></span><span class="dish-rule"></span><span class="dish-price">38</span></div>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false"><span class="no">III</span> To finish <span class="plus">+</span></button>
+        <div class="acc-body"><div class="acc-inner">
+          <div class="dish"><span><span class="dish-name">Burnt honey custard</span><span class="dish-desc">Leatherwood, oat crumb</span></span><span class="dish-rule"></span><span class="dish-price">18</span></div>
+          <div class="dish"><span><span class="dish-name">Poached quince</span><span class="dish-desc">Bay leaf ice cream, brown sugar tuile</span></span><span class="dish-rule"></span><span class="dish-price">19</span></div>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false"><span class="no">IV</span> Tasting menu <span class="plus">+</span></button>
+        <div class="acc-body"><div class="acc-inner">
+          <div class="dish"><span><span class="dish-name">Seven courses</span><span class="dish-desc">Whole table only, until 8:30pm</span></span><span class="dish-rule"></span><span class="dish-price">145</span></div>
+          <div class="dish"><span><span class="dish-name">With wine pairing</span><span class="dish-desc">Five glasses, mostly Tasmanian</span></span><span class="dish-rule"></span><span class="dish-price">225</span></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="room">
+  <div class="wrap reveal centered">
+    <p class="eyebrow">The room</p><div class="rule"></div>
+    <h2>Forty seats, <em>one fire</em>.</h2>
+    <p class="lede" style="margin-bottom:2.6rem">Click any photo to open it full screen — scroll or pinch to zoom, drag to pan.</p>
+  </div>
+  <div class="wrap reveal">
+    <!-- ⚠ CHANGE: photos YOU took at THEIR venue -->
+    <div class="gallery" id="gal">
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/sable-1/1400/1400" alt="The dining room at dusk" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/sable-2/900/900" alt="The wood fire" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/sable-3/900/900" alt="Oysters on ice" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/sable-4/900/900" alt="The pass" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/sable-5/900/900" alt="The wine wall" loading="lazy"></button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="book">
+  <div class="wrap cols reveal">
+    <div>
+      <p class="eyebrow">Reservations</p><div class="rule"></div>
+      <h2>Book a <em>table</em>.</h2>
+      <p class="lede">Dinner Wednesday to Sunday from 5:30pm. Parties above six, please call — we'll look after you properly.</p>
+      <address style="margin-top:2.2rem">
+        41 Hampden Road<br>Battery Point TAS 7004<br>
+        <a href="tel:+61362001200">03 6200 1200</a>
+      </address>
+      <a class="map-link" href="https://maps.google.com/?q=41+Hampden+Road+Battery+Point+TAS">Open in Google Maps →</a>
+    </div>
+    <div>
+      <!-- Static form. No backend = nothing server-side to exploit.
+           Deploying on Netlify? Add data-netlify="true" to receive submissions. -->
+      <form class="form" id="form" novalidate>
+        <div class="grid2">
+          <div class="field"><label for="rname">Name</label><input id="rname" type="text" required autocomplete="name"><span class="err" id="e-name"></span></div>
+          <div class="field"><label for="rphone">Phone</label><input id="rphone" type="tel" required autocomplete="tel"><span class="err" id="e-phone"></span></div>
+        </div>
+        <div class="field"><label for="remail">Email</label><input id="remail" type="email" required autocomplete="email"><span class="err" id="e-email"></span></div>
+        <div class="grid2">
+          <div class="field"><label for="rdate">Date</label><input id="rdate" type="date" required><span class="err" id="e-date"></span></div>
+          <div class="field"><label for="rtime">Time</label>
+            <select id="rtime">
+              <option>5:30 pm</option><option>6:00 pm</option><option>6:30 pm</option>
+              <option>7:00 pm</option><option>7:30 pm</option><option>8:00 pm</option><option>8:30 pm</option>
+            </select><span class="err"></span></div>
+        </div>
+        <div class="field"><label for="rsize">Party size</label>
+          <select id="rsize"><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7+ — please call</option></select>
+          <span class="err"></span></div>
+        <div class="field"><label for="rnote">Anything we should know</label><textarea id="rnote" placeholder="Allergies, occasion, seating preference"></textarea><span class="err"></span></div>
+        <button class="btn btn-gold mag" type="submit">Request reservation</button>
+        <p class="form-msg" id="formMsg" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="find">
+  <div class="wrap cols reveal">
+    <div>
+      <p class="eyebrow">Service</p><div class="rule"></div>
+      <h2>When we're <em>open</em>.</h2>
+      <table class="hours" id="hoursTable"><tbody>
+        <tr data-day="1"><th>Monday</th><td>Closed</td></tr>
+        <tr data-day="2"><th>Tuesday</th><td>Closed</td></tr>
+        <tr data-day="3"><th>Wednesday</th><td>17:30 — 22:30</td></tr>
+        <tr data-day="4"><th>Thursday</th><td>17:30 — 22:30</td></tr>
+        <tr data-day="5"><th>Friday</th><td>17:30 — 22:30</td></tr>
+        <tr data-day="6"><th>Saturday</th><td>17:30 — 22:30</td></tr>
+        <tr data-day="0"><th>Sunday</th><td>17:30 — 22:30</td></tr>
+      </tbody></table>
+    </div>
+    <div>
+      <p class="eyebrow">Good to know</p><div class="rule"></div>
+      <h2>Before you <em>arrive</em>.</h2>
+      <p class="lede">Street parking on Hampden Road is free after 6pm. The dining room is accessible; the mezzanine is not. We hold tables for fifteen minutes.</p>
+      <p class="lede">Children are welcome before 7pm. We're happy to cook around most dietaries with a day's notice.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><p class="foot-brand">Sable <em>&amp;</em> Vine</p>
+        <p style="max-width:32ch;color:var(--faint)">Wood fire and Tasmanian produce in Battery Point.</p></div>
+      <div><h4>Visit</h4><ul class="flist"><li>41 Hampden Road</li><li>Battery Point TAS 7004</li><li><a href="tel:+61362001200">03 6200 1200</a></li></ul></div>
+      <div><h4>Follow</h4><ul class="flist"><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li></ul></div>
+    </div>
+    <div class="credit"><span>© <span id="year">2026</span> Sable &amp; Vine</span>
+      <!-- CHANGE: your name -->
+      <span>Built by Supreme Ranabhat</span></div>
+  </div>
+</footer>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <div id="lbView"><img id="lbImg" alt=""></div>
+  <div class="lb-hint">Scroll or pinch to zoom · drag to pan</div>
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+  <div class="lb-bar">
+    <button id="zOut" aria-label="Zoom out">−</button>
+    <span class="lb-zoom" id="zVal">100%</span>
+    <button id="zIn" aria-label="Zoom in">+</button>
+    <button id="zReset" aria-label="Reset zoom">⟲</button>
+  </div>
+</div>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

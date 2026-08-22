@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  MERIDIAN BAY — Premium hotel / resort site
+  ═══════════════════════════════════════════════════════════════════
+  Self-contained. No build step, no framework, no server.
+
+  Deliberately LIGHT where the cafe and restaurant sites are dark —
+  three sites in a portfolio should not look like one template.
+
+  FEATURES
+    · 3D coverflow room selector (drag, keyboard, auto-advance)
+    · Live booking widget — dates, nights, guests, rate estimate
+    · Full zoom lightbox — wheel / pinch / double-tap + drag pan
+    · Preloader, scroll progress, mobile drawer, parallax banner
+    · Amenities grid, reviews slider, availability status
+    · JSON-LD Hotel schema for Google travel surfaces
+
+  SECURITY
+    · Static only — no server code, no database, no auth to attack
+    · No third-party scripts, no trackers
+    · Booking form is client-side; wire to a real PMS or Netlify Forms
+    · Rate estimate is indicative only — never the source of truth
+
+  CHANGE: marks everything to replace per client.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#F4F2EC">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<title>Meridian Bay — Coastal Hotel, Bicheno Tasmania</title>
+<meta name="description" content="Fourteen rooms above the water at Bicheno on Tasmania's east coast. Sea baths, a small restaurant, and nothing much to do.">
+<meta property="og:title" content="Meridian Bay">
+<meta property="og:description" content="Fourteen rooms above the water at Bicheno, Tasmania.">
+<meta property="og:type" content="website">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Hotel",
+"name":"Meridian Bay","telephone":"+61363751800","priceRange":"$$$",
+"starRating":{"@type":"Rating","ratingValue":"4.5"},
+"address":{"@type":"PostalAddress","streetAddress":"9 Esplanade","addressLocality":"Bicheno","addressRegion":"TAS","postalCode":"7215","addressCountry":"AU"},
+"geo":{"@type":"GeoCoordinates","latitude":-41.8756,"longitude":148.3047},
+"amenityFeature":[
+{"@type":"LocationFeatureSpecification","name":"Free WiFi","value":true},
+{"@type":"LocationFeatureSpecification","name":"Restaurant","value":true},
+{"@type":"LocationFeatureSpecification","name":"Sea baths","value":true},
+{"@type":"LocationFeatureSpecification","name":"Free parking","value":true}]}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=Karla:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="pre"><div>
+  <div class="pre-mark">Meridian <em>Bay</em></div>
+  <div class="pre-bar"><i id="preBar"></i></div>
+</div></div>
+<div id="prog"></div>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Meridian <em>Bay</em></a>
+    <div class="nav-links">
+      <a href="#rooms">Rooms</a><a href="#place">The place</a><a href="#gallery">Gallery</a>
+      <a href="#say">Guests</a><a href="#find">Find us</a>
+    </div>
+    <a class="btn btn-ocean nav-book mag" href="#book" style="padding:.7rem 1.4rem">Check availability</a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
+  </div>
+</nav>
+<div id="drawer"><nav>
+  <a href="#rooms">Rooms</a><a href="#place">The place</a><a href="#gallery">Gallery</a>
+  <a href="#say">Guests</a><a href="#book">Book</a><a href="#find">Find us</a>
+</nav></div>
+
+<header class="hero" id="top">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="band b1" id="b1"></div>
+  <div class="band b2" id="b2"></div>
+  <div class="band b3" id="b3"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="chip"><span class="dot" aria-hidden="true"></span><span id="availText">Checking availability…</span></div>
+      <!-- CHANGE: headline, lede -->
+      <h1>Fourteen rooms, <em>one horizon</em>.</h1>
+      <p>Above the water at Bicheno, on Tasmania's east coast. Sea baths, a small kitchen, and very little to do.</p>
+      <div class="actions">
+        <a class="btn btn-light mag" href="#rooms">See the rooms</a>
+        <a class="btn btn-light mag" href="#place">The place</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ BOOKING WIDGET ═══ -->
+<div class="wrap booking" id="book">
+  <div class="booking-card">
+    <div class="bk-field"><label for="bin">Check in</label><input id="bin" type="date"></div>
+    <div class="bk-field"><label for="bout">Check out</label><input id="bout" type="date"></div>
+    <div class="bk-nights" id="nights">—</div>
+    <div class="bk-field"><label for="bguests">Guests</label>
+      <select id="bguests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+    <button class="btn btn-ocean mag" id="bCheck" type="button">Check availability</button>
+    <p class="bk-out" id="bOut" role="status"></p>
+  </div>
+</div>
+
+<!-- ═══ ROOMS — 3D COVERFLOW ═══ -->
+<section class="section" id="rooms">
+  <div class="wrap centered reveal">
+    <p class="eyebrow">Where you'll sleep</p>
+    <h2>Every room faces <em>the water</em>.</h2>
+    <p class="lede">Drag to browse, or use the arrows. Rates are per night, two guests, including breakfast.</p>
+  </div>
+  <div class="wrap reveal">
+    <div class="flow-wrap" id="flowWrap" tabindex="0" aria-label="Room selector">
+      <div class="flow" id="flow"></div>
+    </div>
+    <div class="flow-ctl">
+      <button id="flowPrev" aria-label="Previous room">‹</button>
+      <span class="flow-label" id="flowLabel"></span>
+      <button id="flowNext" aria-label="Next room">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE PLACE ═══ -->
+<section class="section alt" id="place">
+  <div class="wrap cols reveal">
+    <div>
+      <p class="eyebrow">The place</p>
+      <h2>Built in 1954. <em>Barely</em> changed since.</h2>
+      <!-- CHANGE: the real story -->
+      <p class="lede">The building was a fishermen's guesthouse for forty years before it was anything else. We kept the bones, the timber, and the terrible little bar, and replaced everything that leaked.</p>
+      <p class="lede">There's no lift, no pool, and no television in the rooms. The blowhole is a nine-minute walk north and the penguins come ashore just past it after dusk.</p>
+    </div>
+    <div>
+      <blockquote style="font-family:var(--display);font-weight:300;font-size:clamp(1.45rem,2.7vw,2.1rem);line-height:1.32;border-left:2px solid var(--brass);padding-left:1.7rem;margin:0">
+        People ask what there is to do here. Honestly — not much. That's rather the point.
+        <cite style="display:block;font-family:var(--mono);font-size:.7rem;font-style:normal;letter-spacing:.13em;text-transform:uppercase;color:var(--soft);margin-top:1.3rem">— Ruth &amp; Anders, owners</cite>
+      </blockquote>
+    </div>
+  </div>
+  <div class="wrap reveal">
+    <div class="amen">
+      <!-- CHANGE: real amenities -->
+      <div class="amen-card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5.5 5.5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/></svg></div>
+        <h3>Fast, free WiFi</h3><p>Fibre to the building. Works in every room, including the ones at the back.</p></div>
+      <div class="amen-card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 17c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0M3 12c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0"/></svg></div>
+        <h3>Sea baths</h3><p>Tidal rock pool below the terrace. Bracing in January, heroic in July.</p></div>
+      <div class="amen-card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3v8a3 3 0 0 0 6 0V3M9 14v7M18 3c-1.5 2-2 4-2 6s.5 3 2 3v9"/></svg></div>
+        <h3>Kitchen &amp; bar</h3><p>Twenty-two seats, dinner Thursday to Sunday. Breakfast for guests daily.</p></div>
+      <div class="amen-card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="10" width="18" height="8" rx="2"/><path d="M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3M7 18v2M17 18v2"/></svg></div>
+        <h3>Free parking</h3><p>Off-street, right at the door. EV charger on the north wall.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="wrap centered reveal">
+    <p class="eyebrow">By the numbers</p>
+    <h2>Small, and staying <em>that way</em>.</h2>
+    <div class="stats" style="width:100%">
+      <div class="stat"><b class="count" data-to="14">0</b><span>Rooms</span></div>
+      <div class="stat"><b class="count" data-to="72">0</b><span>Years standing</span></div>
+      <div class="stat"><b class="count" data-to="40" data-suffix="m">0</b><span>To the water</span></div>
+      <div class="stat"><b class="count" data-to="9" data-suffix=" min">0</b><span>To the blowhole</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GALLERY ═══ -->
+<section class="section" id="gallery">
+  <div class="wrap centered reveal">
+    <p class="eyebrow">Have a look</p>
+    <h2>The building, the <em>water</em>, the light.</h2>
+    <p class="lede">Click any photo to open it full screen — scroll or pinch to zoom, drag to pan.</p>
+  </div>
+  <div class="wrap reveal">
+    <!-- ⚠ CHANGE: photos YOU took at THEIR property -->
+    <div class="gallery" id="gal">
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/meridian-1/1400/1400" alt="The terrace at first light" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/meridian-2/900/900" alt="A corner room" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/meridian-3/900/900" alt="The sea baths" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/meridian-4/900/900" alt="The bar" loading="lazy"></button>
+      <button type="button" aria-label="Open photo"><img src="https://picsum.photos/seed/meridian-5/900/900" alt="The coast path north" loading="lazy"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REVIEWS ═══ -->
+<section class="section alt" id="say">
+  <div class="wrap centered reveal">
+    <p class="eyebrow">Guests</p>
+    <h2>What people <em>said</em>.</h2>
+    <!-- CHANGE: real reviews from their Google or Booking.com listing. Never invent these. -->
+    <div class="slider" style="width:100%">
+      <div class="track" id="track">
+        <div class="slide"><div class="rcard"><div class="stars" aria-label="5 of 5">★★★★★</div>
+          <p>We came for two nights and changed our plans to stay four. The room above the baths is worth every dollar.</p><cite>Helena K. — Google</cite></div></div>
+        <div class="slide"><div class="rcard"><div class="stars" aria-label="5 of 5">★★★★★</div>
+          <p>No TV, no lift, no fuss. Woke to the sound of the water both mornings and didn't miss any of it.</p><cite>Tom &amp; Ceri B. — Booking.com</cite></div></div>
+        <div class="slide"><div class="rcard"><div class="stars" aria-label="5 of 5">★★★★★</div>
+          <p>Ruth met us at the door with a drink and a tide chart. That tells you most of what you need to know.</p><cite>Sanjay P. — Google</cite></div></div>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FIND ═══ -->
+<section class="section" id="find">
+  <div class="wrap cols reveal">
+    <div>
+      <p class="eyebrow">Getting here</p>
+      <h2>Bicheno, <em>east coast</em>.</h2>
+      <p class="lede">Two and a half hours from Hobart, two from Launceston. The drive up the coast from Orford is the better of the two — leave time for it.</p>
+      <address style="margin-top:2rem">
+        9 Esplanade<br>Bicheno TAS 7215<br>
+        <a href="tel:+61363751800">03 6375 1800</a><br>
+        <a href="mailto:stay@meridianbay.com.au">stay@meridianbay.com.au</a>
+      </address>
+      <a class="map-link" href="https://maps.google.com/?q=9+Esplanade+Bicheno+TAS">Open in Google Maps →</a>
+    </div>
+    <div>
+      <p class="eyebrow">Enquiries</p>
+      <h2>Ask us <em>anything</em>.</h2>
+      <!-- Static form, no backend = nothing server-side to attack.
+           On Netlify, add data-netlify="true" to receive submissions. -->
+      <form class="form" id="form" novalidate>
+        <div class="grid2">
+          <div class="field"><label for="cname">Name</label><input id="cname" type="text" required autocomplete="name"><span class="err" id="e-name"></span></div>
+          <div class="field"><label for="cemail">Email</label><input id="cemail" type="email" required autocomplete="email"><span class="err" id="e-email"></span></div>
+        </div>
+        <div class="field"><label for="cmsg">Message</label><textarea id="cmsg" required placeholder="Dates you're considering, questions, anything at all"></textarea><span class="err" id="e-msg"></span></div>
+        <button class="btn btn-ocean mag" type="submit">Send enquiry</button>
+        <p class="form-msg" id="formMsg" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><p class="foot-brand">Meridian <em>Bay</em></p>
+        <p style="max-width:32ch;color:rgba(255,253,248,.6)">Fourteen rooms above the water at Bicheno, Tasmania.</p></div>
+      <div><h4>Stay</h4><ul class="flist"><li>9 Esplanade</li><li>Bicheno TAS 7215</li><li><a href="tel:+61363751800">03 6375 1800</a></li></ul></div>
+      <div><h4>Follow</h4><ul class="flist"><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li></ul></div>
+    </div>
+    <div class="credit"><span>© <span id="year">2026</span> Meridian Bay</span>
+      <!-- CHANGE: your name -->
+      <span>Built by Supreme Ranabhat</span></div>
+  </div>
+</footer>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <div id="lbView"><img id="lbImg" alt=""></div>
+  <div class="lb-hint">Scroll or pinch to zoom · drag to pan</div>
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+  <div class="lb-bar">
+    <button id="zOut" aria-label="Zoom out">−</button>
+    <span class="lb-zoom" id="zVal">100%</span>
+    <button id="zIn" aria-label="Zoom in">+</button>
+    <button id="zReset" aria-label="Reset zoom">⟲</button>
+  </div>
+</div>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
