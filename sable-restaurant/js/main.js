@@ -24,7 +24,7 @@ const fine = matchMedia('(pointer:fine)').matches;
   ];
   const car = document.getElementById('car'), wrap = document.getElementById('carWrap');
   const label = document.getElementById('carLabel');
-  const N = DISHES.length, STEP = 360 / N, R = 215;
+  const N = DISHES.length, STEP = 360 / N, R = 185;
   let angle = 0, timer = null, drag = null;
 
   DISHES.forEach((d, i) => {
