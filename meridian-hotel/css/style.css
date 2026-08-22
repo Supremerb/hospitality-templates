@@ -276,3 +276,15 @@ footer a:hover{color:var(--brass-hi)}
 .flist{list-style:none;margin:0;padding:0;font-family:var(--mono);font-size:.81rem;line-height:2.2}
 .credit{margin-top:3rem;padding-top:1.4rem;border-top:1px solid rgba(255,253,248,.16);font-family:var(--mono);
   font-size:.7rem;color:rgba(255,253,248,.45);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+/* --- overrides --- */
+.nav{background:linear-gradient(rgba(11,42,48,.55),transparent)}
+.nav .nav-links a{color:rgba(255,253,248,.88)}
+.nav .nav-links a:hover{color:#fff}
+.nav .brand{color:var(--shell)}
+.nav.stuck{background:rgba(244,242,236,.92)}
+.nav.stuck .nav-links a{color:var(--soft)}
+.nav.stuck .nav-links a:hover{color:var(--ink)}
+.nav.stuck .brand{color:var(--ink)}
+.nav .burger i{background:var(--shell)}
+.nav.stuck .burger i{background:var(--ink)}
