@@ -89,8 +89,7 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
   radial-gradient(44% 40% at 50% 18%,rgba(201,165,87,.20) 0%,transparent 62%),
   radial-gradient(70% 60% at 50% 96%,rgba(123,34,51,.30) 0%,transparent 68%),
   linear-gradient(175deg,#150F0E 0%,#0B0908 60%)}
-.hero-inner{position:relative;z-index:2;text-align:center;padding-block:calc(var(--nav-h) + 3rem) 5rem;
-  display:grid;gap:2.6rem;justify-items:center}
+.hero-inner{position:relative;z-index:2;text-align:center;padding-block:calc(var(--nav-h) + 1.5rem) 3rem;display:grid;gap:1.6rem;justify-items:center}
 .chip{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.7rem;
   letter-spacing:.16em;text-transform:uppercase;border:1px solid var(--hair);
   padding:.5rem 1.15rem .5rem .85rem;background:rgba(242,237,230,.04);backdrop-filter:blur(8px)}
@@ -98,25 +97,20 @@ body::after{content:"";position:fixed;inset:0;z-index:95;pointer-events:none;opa
   box-shadow:0 0 0 0 rgba(201,165,87,.7);animation:pulse 2.9s infinite}
 .dot.shut{background:#6E6663;animation:none}
 @keyframes pulse{70%{box-shadow:0 0 0 .6rem rgba(201,165,87,0)}100%{box-shadow:0 0 0 0 rgba(201,165,87,0)}}
-.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(3rem,10vw,7.5rem);line-height:.94;
-  letter-spacing:-.02em;margin:0;max-width:12ch}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(2.5rem,6.5vw,5rem);line-height:1;letter-spacing:-.02em;margin:0;max-width:20ch}
 .hero h1 em{font-style:italic;color:var(--gold)}
 .hero p{font-size:clamp(1.02rem,.9vw + .82rem,1.25rem);max-width:44ch;margin:0;color:var(--dim)}
 .actions{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
 
 /* ═══ 3D DISH CAROUSEL ═══ */
-.carousel-wrap{position:relative;width:100%;height:24rem;perspective:1300px;overflow:hidden;
-  margin-top:1rem;cursor:grab;touch-action:pan-y}
+.carousel-wrap{position:relative;width:100%;height:19rem;perspective:1300px;overflow:hidden;margin-top:.5rem;cursor:grab;touch-action:pan-y}
 .carousel-wrap.drag{cursor:grabbing}
-.carousel{position:absolute;left:50%;top:50%;width:15rem;height:15rem;margin:-7.5rem 0 0 -7.5rem;
-  transform-style:preserve-3d;transition:transform .8s var(--out)}
+.carousel{position:absolute;left:50%;top:50%;width:13rem;height:13rem;margin:-6.5rem 0 0 -6.5rem;transform-style:preserve-3d;transition:transform .8s var(--out)}
 .carousel.spinning{transition:none}
 .plate{position:absolute;inset:0;border-radius:50%;overflow:hidden;backface-visibility:hidden;
   border:1px solid rgba(201,165,87,.28);box-shadow:0 22px 50px -18px rgba(0,0,0,.9)}
 .plate img{width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.06) brightness(.92)}
-.plate figcaption{position:absolute;inset:auto 0 0;padding:1.4rem .9rem .9rem;text-align:center;
-  background:linear-gradient(transparent,rgba(11,9,8,.92));font-family:var(--mono);font-size:.68rem;
-  letter-spacing:.13em;text-transform:uppercase}
+.plate figcaption{position:absolute;inset:auto 0 14%;padding:1.2rem .6rem .3rem;text-align:center;background:linear-gradient(transparent,rgba(11,9,8,.9));font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase}
 .car-ctl{display:flex;gap:.6rem;justify-content:center;align-items:center;margin-top:.5rem}
 .car-ctl button{width:2.7rem;height:2.7rem;border-radius:50%;border:1px solid var(--hair);
   background:rgba(242,237,230,.04);color:var(--ivory);cursor:pointer;font-size:1.1rem;
