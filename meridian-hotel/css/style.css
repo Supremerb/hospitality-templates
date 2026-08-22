@@ -288,3 +288,7 @@ footer a:hover{color:var(--brass-hi)}
 .nav.stuck .brand{color:var(--ink)}
 .nav .burger i{background:var(--shell)}
 .nav.stuck .burger i{background:var(--ink)}
+@media(min-width:62rem){
+  .booking-card{grid-template-columns:1fr 1fr 5rem 1fr auto}
+}
+.bk-nights{min-width:4.5rem}
